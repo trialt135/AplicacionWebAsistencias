@@ -1,0 +1,45 @@
+@model IEnumerable<AspnetCoreMvcFull.Models.Registro>
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h1>Registros</h1>
+
+
+</p>
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				Fecha
+			</th>
+			<th>
+				Nombre de Grupo
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Fecha)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.IdGrupoNavigation.NombreGrupo)
+				</td>
+				<td>
+					
+
+					<!-- Enlace para redirigir a las asistencias con el IdRegistro -->
+					<form asp-controller="Asistenciums" asp-action="Index" method="get" style="display:inline;">
+						<input type="hidden" name="idRegistro" value="@item.IdRegistro" />
+						<button type="submit" class="btn btn-info" style="margin-left:25px">Ver Asistencias</button>
+					</form>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

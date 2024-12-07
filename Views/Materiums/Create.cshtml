@@ -1,0 +1,48 @@
+@model AspnetCoreMvcFull.Models.Materium
+
+@{
+	ViewData["Title"] = "Crear";
+}
+
+<h1>Crear</h1>
+
+<h4>Materias</h4>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+			<!-- Agregar padding al formulario -->
+			<div class="form-group p-3">
+				<!-- Aquí agregamos padding de 3 -->
+				<label asp-for="NombreMateria" class="control-label">Nombre de la Materia</label>
+				<input asp-for="NombreMateria" class="form-control" />
+				<span asp-validation-for="NombreMateria" class="text-danger"></span>
+			</div>
+
+			<!-- Agregar padding al select -->
+			<div class="form-group p-3">
+				<!-- Aquí agregamos padding de 3 -->
+				<label asp-for="IdProfesor" class="control-label">Nombre de Profesor</label>
+				<select asp-for="IdProfesor" class="form-control" asp-items="ViewBag.IdProfesor"></select>
+			</div>
+
+			<!-- Botón con padding -->
+			<div class="form-group p-3">
+				<!-- Aquí agregamos padding de 3 -->
+				<input type="submit" value="Crear" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

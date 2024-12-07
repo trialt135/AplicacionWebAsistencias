@@ -1,0 +1,145 @@
+@{
+  TempData.Keep();
+  string? currentPage = ViewContext.HttpContext.Request.Path;
+}
+
+<!-- Menu -->
+@* ! Do this simple *@
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+
+  @* ! Hide app brand if navbar-full *@
+  <div
+    class='app-brand demo @((@ViewData["navbarFull"] != null && Convert.ToBoolean(@ViewData["navbarFull"])) ? "d-xl-none" : "")'>
+    <a asp-controller="Dashboards" asp-action="Index" class="app-brand-link">
+      <span class="app-brand-logo demo">
+        @await Html.PartialAsync("../_Partials/_Macros")
+      </span>
+      <span class="app-brand-text demo menu-text fw-bold ms-2">@TempData.Peek("appName")</span>
+    </a>
+
+    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-noFCne">
+      <i class="bx bx-chevron-left bx-sm d-flex align-items-center justify-content-center"></i>
+    </a>
+  </div>
+
+  <div class="menu-inner-shadow"></div>
+
+  @* ! Full version menu-items *@
+  <ul class="menu-inner py-1">
+  
+    <!-- Apps & Pages -->
+    <li class="menu-header small text-uppercase">
+      <span class="menu-header-text">Apps &amp; Pages</span>
+    </li>
+    <!-- Apps -->
+		
+
+		<!-- Menú para la entidad Alumno -->
+		<li class='menu-item@(currentPage.StartsWith("/Alumnoes") ? " active open" : "")'>
+			<a href="javascript:void(0);" class="menu-link menu-toggle">
+				<i class="menu-icon tf-icons bx bx-user-circle"></i>
+				<div>Alumnos</div>
+			</a>
+			<ul class="menu-sub">
+				<li class='menu-item@(currentPage == "/Alumnoes/Index" ? " active" : "")'>
+					<a asp-controller="Alumnoes" asp-action="Index" class="menu-link">
+						<div>Listado de Alumno</div>
+					</a>
+				</li>
+				
+				
+			</ul>
+		</li>
+
+		<!-- Menú para la entidad Asistencium -->
+		<li class='menu-item@(currentPage.StartsWith("/Asistenciums") ? " active open" : "")'>
+			<a href="javascript:void(0);" class="menu-link menu-toggle">
+				<i class="menu-icon tf-icons bx bx-check-circle"></i>
+				<div>Asistencia</div>
+			</a>
+			<ul class="menu-sub">
+				
+				
+			</ul>
+		</li>
+
+		<!-- Menú para la entidad Grupo -->
+		<li class='menu-item@(currentPage.StartsWith("/Grupoes") ? " active open" : "")'>
+			<a href="javascript:void(0);" class="menu-link menu-toggle">
+				<i class="menu-icon tf-icons bx bx-group"></i>
+				<div>Grupos</div>
+			</a>
+			<ul class="menu-sub">
+				<li class='menu-item@(currentPage == "/Grupoes/Index" ? " active" : "")'>
+					<a asp-controller="Grupoes" asp-action="Index" class="menu-link">
+						<div>Listado de Grupos</div>
+					</a>
+				</li>
+				
+				
+			</ul>
+		</li>
+
+		<!-- Menú para la entidad Materium -->
+		<li class='menu-item@(currentPage.StartsWith("/Materiums") ? " active open" : "")'>
+			<a href="javascript:void(0);" class="menu-link menu-toggle">
+				<i class="menu-icon tf-icons bx bx-book"></i>
+				<div>Materias</div>
+			</a>
+			<ul class="menu-sub">
+				<li class='menu-item@(currentPage == "/Materiums/Index" ? " active" : "")'>
+					<a asp-controller="Materiums" asp-action="Index" class="menu-link">
+						<div>Listado de Materias</div>
+					</a>
+				</li>
+				
+			</ul>
+		</li>
+
+	
+
+		<!-- Menú para la entidad Registro -->
+		<li class='menu-item@(currentPage.StartsWith("/Registroes") ? " active open" : "")'>
+			<a href="javascript:void(0);" class="menu-link menu-toggle">
+				<i class="menu-icon tf-icons bx bx-bookmark"></i>
+				<div>Registros</div>
+			</a>
+			
+		</li>
+
+		<!-- Menú para la entidad Rfid -->
+		<li class='menu-item@(currentPage.StartsWith("/Rfisd") ? " active open" : "")'>
+			<a href="javascript:void(0);" class="menu-link menu-toggle">
+				<i class="menu-icon tf-icons bx bx-radio-circle-marked"></i>
+				<div>RFID</div>
+			</a>
+			<ul class="menu-sub">
+				<li class='menu-item@(currentPage == "/Rfids/Index" ? " active" : "")'>
+					<a asp-controller="Rfids" asp-action="Index" class="menu-link">
+						<div>Listado de RFID</div>
+					</a>
+				</li>
+				
+			</ul>
+		</li>
+
+		<!-- Menú para la entidad Usuario -->
+		<li class='menu-item@(currentPage.StartsWith("/Usuarios") ? " active open" : "")'>
+			<a href="javascript:void(0);" class="menu-link menu-toggle">
+				<i class="menu-icon tf-icons bx bx-user"></i>
+				<div>Usuarios</div>
+			</a>
+			<ul class="menu-sub">
+				<li class='menu-item@(currentPage == "/Usuarios/Index" ? " active" : "")'>
+					<a asp-controller="Usuarios" asp-action="Index" class="menu-link">
+						<div>Listado de Usuarios</div>
+					</a>
+				</li>
+				
+			</ul>
+		</li>
+
+  </ul>
+
+</aside>
+<!-- / Menu -->

@@ -1,0 +1,123 @@
+@model AspnetCoreMvcFull.Models.Grupo
+@{
+	ViewData["Title"] = "Crear Grupo";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h4>Grupo</h4>
+<hr />
+<div class="row">
+	<div class="col-md-6">
+		<form asp-action="Create" method="post" class="p-3">
+			<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+			<!-- Nombre del Grupo -->
+			<div class="form-group mb-3">
+				<label asp-for="NombreGrupo" class="control-label">Nombre del Grupo</label>
+				<input asp-for="NombreGrupo" class="form-control" required />
+				<span asp-validation-for="NombreGrupo" class="text-danger"></span>
+			</div>
+
+			<!-- Selección de la Materia -->
+			<div class="form-group mb-3">
+				<label asp-for="IdMateria" class="control-label">Nombre de la Materia</label>
+				<select asp-for="IdMateria" class="form-control" asp-items="ViewBag.IdMateria" id="materiaSelect" required>
+					<option value="">Seleccione una materia</option>
+				</select>
+				<span asp-validation-for="IdMateria" class="text-danger"></span>
+			</div>
+
+			<!-- Mostrar los alumnos seleccionados con checkboxes -->
+			<div class="form-group mb-3" id="alumnosContainer">
+				<label class="control-label">Seleccionar Alumnos</label><br>
+				<!-- Los alumnos filtrados se añadirán aquí a través de AJAX -->
+			</div>
+
+
+			<!-- Rango de Fechas -->
+			<div class="form-group mb-3">
+				<label for="kt_daterangepicker_1" class="control-label">Seleccionar Rango de Fechas</label>
+				<input type="text" id="kt_daterangepicker_1" class="form-control js-daterangepicker"  />
+			</div>
+			<input type="hidden" id="FechaInicio" name="FechaInicio" />
+			<input type="hidden" id="FechaFin" name="FechaFin" />
+
+			<!-- Checkboxes para los días -->
+			<div class="form-group mb-3">
+				<label class="control-label">Seleccionar días</label><br>
+				<input type="checkbox" id="Monday" name="diasSeleccionados" value="Monday" /> Lunes
+				<input type="checkbox" id="Tuesday" name="diasSeleccionados" value="Tuesday" /> Martes
+				<input type="checkbox" id="Wednesday" name="diasSeleccionados" value="Wednesday" /> Miércoles
+				<input type="checkbox" id="Thursday" name="diasSeleccionados" value="Thursday" /> Jueves
+				<input type="checkbox" id="Friday" name="diasSeleccionados" value="Friday" /> Viernes
+				<input type="checkbox" id="Saturday" name="diasSeleccionados" value="Saturday" /> Sábado
+				<input type="checkbox" id="Sunday" name="diasSeleccionados" value="Sunday" /> Domingo
+			</div>
+			<input type="hidden" id="alumnosSeleccionados" name="alumnosSeleccionados" required />
+			<!-- Botón de Enviar -->
+			<div class="form-group">
+				<input type="submit" value="Crear" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<!-- Flecha morada que lleva al Index -->
+<div class="mt-3">
+	<a asp-action="Index" class="btn" style="font-size: 24px; color: purple; text-decoration: none; padding: 10px;">
+		<i class="bi bi-arrow-left-circle" style="font-size: 32px; color: purple;"></i> Volver al Listado
+	</a>
+</div>
+
+@section PageScripts {
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<!-- Incluir Moment.js -->
+	<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+
+	<!-- Incluir CSS de Date Range Picker -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+	<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			// Inicializar el date range picker
+			$('#kt_daterangepicker_1').daterangepicker({
+				locale: {
+					format: 'YYYY-MM-DD'  // Asegúrate de que el formato sea compatible con DateTime
+				},
+				autoUpdateInput: false, // Evitar que actualice automáticamente el input
+			}, function (start, end, label) {
+				// Asignar las fechas seleccionadas a los campos ocultos
+				$('#FechaInicio').val(start.format('YYYY-MM-DD'));
+				$('#FechaFin').val(end.format('YYYY-MM-DD'));
+			});
+
+			// AJAX para cargar los alumnos cuando se selecciona una materia
+					// AJAX para cargar los alumnos cuando se selecciona una materia
+				$('#materiaSelect').change(function () {
+			var materiaId = $(this).val();
+			if (materiaId) {
+				$.get('/Grupoes/GetAlumnosByMateria', { idMateria: materiaId }, function (data) {
+					var alumnosHtml = '';
+					if (data.length > 0) {
+						data.forEach(function (alumno) {
+							alumnosHtml += '<div>';
+							alumnosHtml += '<input type="checkbox" id="alumno_' + alumno.idAlumno + '" name="alumnosSeleccionados" value="' + alumno.idAlumno + '" /> ';
+							alumnosHtml += '<label for="alumno_' + alumno.idAlumno + '">' + alumno.nombre + '</label>'; // Mostrar el nombre del alumno
+							alumnosHtml += '</div>';
+						});
+					} else {
+						alumnosHtml = '<p>No hay alumnos disponibles para esta materia.</p>';
+					}
+					$('#alumnosContainer').html(alumnosHtml);
+				});
+			} else {
+				$('#alumnosContainer').html('');
+			}
+		});
+
+
+		});
+	</script>
+}

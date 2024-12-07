@@ -1,0 +1,44 @@
+@model IEnumerable<AspnetCoreMvcFull.Models.Materium>
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h1>Materias</h1>
+
+
+<p>
+	<a class="btn btn-success" asp-action="Create">
+		<i class="fas fa-plus"></i> Crear nueva Materia
+	</a>
+</p>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.NombreMateria)
+			</th>
+			<th>
+				Profesor (Usuario)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.NombreMateria)
+				</td>
+				<td>
+					@* Muestra el IdUsuario y el Nombre del Usuario relacionado con el Profesor *@
+					@Html.DisplayFor(modelItem => item.IdProfesorNavigation.IdUsuarioNavigation.IdUsuario) -
+					@Html.DisplayFor(modelItem => item.IdProfesorNavigation.IdUsuarioNavigation.Nombre)
+				</td>
+			
+			</tr>
+		}
+	</tbody>
+</table>

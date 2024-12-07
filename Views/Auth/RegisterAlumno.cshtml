@@ -1,0 +1,56 @@
+@using AspnetCoreMvcFull.Models
+@model AlumnoViewModel
+
+@{
+	Layout = "_BlankLayout";
+	ViewData["Title"] = "Registro de Alumno";
+}
+
+<div class="container-xxl">
+	<div class="authentication-wrapper authentication-basic container-p-y">
+		<div class="authentication-inner">
+			<div class="card px-sm-6 px-0">
+				<div class="card-body">
+					<h4 class="mb-1">¡Bienvenido al registro de Alumno! 👋</h4>
+					<p class="mb-6">Por favor, rellene estos campos adicionales para completar su registro como Alumno.</p>
+
+					@if (TempData["ErrorMessage"] != null)
+					{
+						<div class="alert alert-danger">
+							@TempData["ErrorMessage"]
+						</div>
+					}
+
+					<!-- Formulario combinado para Alumno y RFID -->
+					<form id="formAuthentication" asp-action="RegisterAlumno" method="POST">
+						<!-- Campo oculto para el IdUsuario -->
+						<input type="hidden" asp-for="IdUsuario" />
+
+						<!-- Campo para FechaIngreso -->
+						<div class="mb-6">
+							<label for="fechaIngreso" class="form-label">Fecha de Ingreso</label>
+							<input type="date" class="form-control" id="fechaIngreso" name="FechaIngreso" asp-for="FechaIngreso" required />
+						</div>
+
+						<!-- Input para RFID -->
+						<div class="mb-6">
+							<label for="rfidInput" class="form-label">Código RFID</label>
+							<input type="text" class="form-control" id="rfidInput" name="CodigoRfid" placeholder="Ingrese RFID" required />
+						</div>
+
+						<div class="mb-6">
+							<button class="btn btn-primary d-grid w-100" type="submit">Registrar Alumno</button>
+						</div>
+					</form>
+
+					<p class="text-center">
+						<span>¿Ya tienes cuenta?</span>
+						<a href="/Auth/LoginBasic">
+							<span>Iniciar sesión</span>
+						</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

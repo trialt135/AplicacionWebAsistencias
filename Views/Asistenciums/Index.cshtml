@@ -1,0 +1,73 @@
+@model IEnumerable<AspnetCoreMvcFull.Models.Asistencium>
+
+@{
+	ViewData["Title"] = "Asistencias";
+	var idRegistro = ViewData["IdRegistro"]; // Obtener el idRegistro de ViewData
+}
+
+<h1>Asistencias</h1>
+
+<!-- Mostrar alertas de éxito o error -->
+@if (TempData["AlertMessage"] != null)
+{
+	<div class="alert alert-@TempData["AlertType"]" role="alert">
+		@TempData["AlertMessage"]
+	</div>
+}
+
+<!-- Formulario para ingresar el RFID -->
+<p>
+	<form asp-controller="Asistenciums" asp-action="UpdatePresente" method="post">
+		<div class="input-group">
+			<!-- Input para RFID -->
+			<input type="text" class="form-control" id="rfidCodigo" name="rfidCodigo" placeholder="Ingrese RFID" required />
+
+			<!-- ID del Registro, pasado como un campo oculto -->
+			<input type="hidden" name="idRegistro" value="@idRegistro" />
+
+			<!-- Botón de Enviar -->
+			<button type="submit" class="btn btn-primary">
+				Asignar RFID
+			</button>
+		</div>
+		<!-- CSRF Token -->
+		@Html.AntiForgeryToken()
+	</form>
+</p>
+
+<!-- Mostrar la fecha del registro -->
+@if (ViewData["RegistroFecha"] != null)
+{
+	<h4>Fecha del Registro: @ViewData["RegistroFecha"]</h4>
+}
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Alumno Nombre</th>
+			<th>Correo</th>
+			<th>Fecha Registro</th>
+			<th>Presente</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>@item.IdAlumnoNavigation.IdUsuarioNavigation.Nombre</td>
+				<td>@item.IdAlumnoNavigation.IdUsuarioNavigation.Correo</td>
+				<td>@item.IdRegistroNavigation.Fecha</td>
+				<td>
+					@if (item.Presente == true)
+					{
+						<span class="badge bg-success">Presente</span>
+					}
+					else
+					{
+						<span class="badge bg-danger">Ausente</span>
+					}
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

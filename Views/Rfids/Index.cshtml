@@ -1,0 +1,62 @@
+@model IEnumerable<AspnetCoreMvcFull.Models.Alumno>
+
+@{
+	ViewData["Title"] = "Alumnos con RFID";
+}
+
+<h1>RFID</h1>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				Código RFID
+			</th>
+			<th>
+				Nombre de Alumno
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var alumno in Model)
+		{
+			<tr>
+				<td>
+					@if (alumno.Rfids != null && alumno.Rfids.Any())
+					{
+						@foreach (var rfid in alumno.Rfids)
+						{
+							<span>@rfid.CodigoRfid</span>
+						}
+					}
+					else
+					{
+						<span>Alumno sin RFID</span>
+					}
+				</td>
+				<td>
+					@alumno.IdUsuarioNavigation.Nombre
+				</td>
+				<td>
+					<form asp-controller="Rfids" asp-action="UpdateRfid" method="post">
+						<div class="input-group">
+							<!-- Input para RFID -->
+							<input type="text" class="form-control" id="rfidInput" name="CodigoRfid" placeholder="Ingrese RFID" required />
+
+							<!-- ID del Alumno, pasado como un campo oculto -->
+							<input type="hidden" name="IdAlumno" value="@alumno.IdAlumno" />
+
+							<!-- Botón de Enviar -->
+							<button type="submit" class="btn btn-primary">
+								Asignar RFID
+							</button>
+						</div>
+						<!-- CSRF Token -->
+						@Html.AntiForgeryToken()
+					</form>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

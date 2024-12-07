@@ -1,0 +1,70 @@
+@model IEnumerable<AspnetCoreMvcFull.Models.Grupo>
+
+@{
+	ViewData["Title"] = "Listado";
+}
+
+<h1>Grupos</h1>
+
+<p>
+  <a class="btn btn-success d-flex align-items-center" asp-action="Create">
+    <i class="fas fa-plus me-2"></i> Crear nuevo Grupo
+  </a>
+</p>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				NOMBRE DE GRUPO
+			</th>
+			<th>
+				Nombre Profesor
+			</th>
+			<th>
+				Correo Profesor
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.NombreGrupo)
+				</td>
+				<td>
+					@item.IdMateriaNavigation?.IdProfesorNavigation?.IdUsuarioNavigation?.Nombre
+				</td>
+				<td>
+					@item.IdMateriaNavigation?.IdProfesorNavigation?.IdUsuarioNavigation?.Correo
+				</td>
+				<td>
+					<div class="btn-group btn-group-sm me-2" role="group" aria-label="Grupo de botones medianos">
+						<a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.IdGrupo">
+							<i class="fas fa-edit me-2"></i> Edit
+						</a>
+						<a class="btn btn-primary" asp-action="Details" asp-route-id="@item.IdGrupo">
+							<i class="fas fa-info-circle me-2"></i> Details
+						</a>
+						
+					</div>
+
+					<!-- Botón para enviar el IdGrupo como parámetro -->
+					<form asp-action="Index" asp-controller="Registroes" method="get" style="display:inline;">
+						<input type="hidden" name="idGrupo" value="@item.IdGrupo" />
+						<button type="submit" class="btn btn-info">Ver Registros del Grupo</button>
+					</form>
+
+					<form  asp-action="GenerarExcel" method="post">
+						<input type="hidden" name="idGrupo" value="@item.IdGrupo" />
+						<button type="submit" class="btn btn-warning">
+							<i class="fas fa-file-excel me-2"></i> Generar Reporte
+						</button>
+					</form>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

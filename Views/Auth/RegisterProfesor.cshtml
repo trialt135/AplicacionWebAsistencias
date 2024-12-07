@@ -1,0 +1,57 @@
+@using AspnetCoreMvcFull.Models
+@model ProfesorViewModel
+
+@{
+	Layout = "_BlankLayout";
+	ViewData["Title"] = "Registro de Profesor - Páginas";
+}
+
+@section PageStyles {
+	<link rel="stylesheet" href="~/vendor/css/pages/page-auth.css">
+}
+
+<div class="container-xxl">
+	<div class="authentication-wrapper authentication-basic container-p-y">
+		<div class="authentication-inner">
+			<div class="card px-sm-6 px-0">
+				<div class="card-body">
+					<div class="app-brand justify-content-center">
+						<a href="/" class="app-brand-link gap-2">
+							<span class="app-brand-logo demo">@await Html.PartialAsync("../_Partials/_Macros")</span>
+							<span class="app-brand-text demo text-heading fw-bold">@TempData.Peek("appName")</span>
+						</a>
+					</div>
+					<h4 class="mb-1">¡Bienvenido al registro de Profesor! 👋</h4>
+					<p class="mb-6">Por favor, rellene estos campos adicionales para completar su registro como Profesor.</p>
+
+					@if (TempData["ErrorMessage"] != null)
+					{
+						<div class="alert alert-danger">
+							@TempData["ErrorMessage"]
+						</div>
+					}
+
+					<form id="formAuthentication" class="mb-6" asp-action="RegisterProfesor" method="POST">
+						<!-- Campo oculto para IdUsuario -->
+						<input type="hidden" asp-for="IdUsuario" />
+
+						<div class="mb-6">
+							<label for="departamento" class="form-label">Departamento</label>
+							<input type="text" class="form-control" id="departamento" name="Departamento" asp-for="Departamento" placeholder="Introduce tu departamento" required />
+						</div>
+						<div class="mb-6">
+							<button class="btn btn-primary d-grid w-100" type="submit">Registrar Profesor</button>
+						</div>
+					</form>
+
+					<p class="text-center">
+						<span>¿Ya tienes cuenta?</span>
+						<a href="/Auth/LoginBasic">
+							<span>Iniciar sesión</span>
+						</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,62 @@
+@model AdministradorViewModel
+
+@{
+	Layout = "_BlankLayout"; // Cambiar el layout si corresponde
+	ViewData["Title"] = "Registro de Administrador - Páginas";
+}
+
+@section PageStyles {
+	<link rel="stylesheet" href="~/vendor/css/pages/page-auth.css">
+}
+
+<div class="container-xxl">
+	<div class="authentication-wrapper authentication-basic container-p-y">
+		<div class="authentication-inner">
+			<!-- Card -->
+			<div class="card px-sm-6 px-0">
+				<div class="card-body">
+					<!-- Brand Logo -->
+					<div class="app-brand justify-content-center">
+						<a href="/" class="app-brand-link gap-2">
+							<span class="app-brand-logo demo">@await Html.PartialAsync("../_Partials/_Macros")</span>
+							<span class="app-brand-text demo text-heading fw-bold">@TempData.Peek("appName")</span>
+						</a>
+					</div>
+					<!-- /Brand Logo -->
+
+					<h4 class="mb-1">¡Bienvenido al registro de Administrador! 👋</h4>
+					<p class="mb-6">Por favor, rellene estos campos adicionales para completar su registro como Administrador.</p>
+
+					@if (TempData["ErrorMessage"] != null)
+					{
+						<div class="alert alert-danger">
+							@TempData["ErrorMessage"]
+						</div>
+					}
+
+					<form id="formAuthentication" class="mb-6" asp-action="RegisterAdministrador" method="POST">
+						<!-- Campo oculto para enviar el IdUsuario -->
+						<input type="hidden" asp-for="IdUsuario" />
+
+						<div class="mb-6">
+							<label for="areaTrabajo" class="form-label">Área de Trabajo</label>
+							<input type="text" class="form-control" id="areaTrabajo" name="AreaTrabajo" asp-for="AreaTrabajo" placeholder="Introduce tu área de trabajo" required />
+						</div>
+
+						<div class="mb-6">
+							<button class="btn btn-primary d-grid w-100" type="submit">Registrar Administrador</button>
+						</div>
+					</form>
+
+					<p class="text-center">
+						<span>¿Ya tienes cuenta?</span>
+						<a href="/Auth/LoginBasic">
+							<span>Iniciar sesión</span>
+						</a>
+					</p>
+				</div>
+			</div>
+			<!-- /Card -->
+		</div>
+	</div>
+</div>

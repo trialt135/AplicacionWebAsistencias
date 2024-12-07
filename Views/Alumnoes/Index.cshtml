@@ -1,0 +1,48 @@
+@model IEnumerable<AspnetCoreMvcFull.Models.Alumno>
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h1>Alumnos</h1>
+
+<p>
+	<a class="btn btn-success d-flex align-items-center" asp-action="Create">
+		<i class="fas fa-plus me-2"></i> Crear nuevo Alumno
+	</a>
+</p>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Fecha de Ingreso</th>
+			<th>Nombre Estudiante</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.FechaIngreso)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Nombre)
+				</td>
+				<td>
+					<div class="btn-group btn-group-sm" role="group" aria-label="Grupo de botones medianos">
+						<a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.IdAlumno">
+							<i class="fas fa-edit me-2"></i> Edit
+						</a>
+						<a class="btn btn-primary" asp-action="Details" asp-route-id="@item.IdAlumno">
+							<i class="fas fa-info-circle me-2"></i> Details
+						</a>
+					
+					</div>
+				</td>
+
+			</tr>
+		}
+	</tbody>
+</table>
